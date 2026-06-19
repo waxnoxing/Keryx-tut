@@ -412,7 +412,10 @@ Nama dalam bracket `[]` terlihat seperti kernel thread / system process.
 | Node tidak sync | Cek `BINDGEN_EXTRA_CLANG_ARGS` sudah di-set saat build |
 | `stdbool.h not found` | Install `libstdc++-14-dev` dan set `BINDGEN_EXTRA_CLANG_ARGS` |
 | `protoc not found` | Install `protobuf-compiler` |
-| Hashrate rendah (< 1 Ghash/s) | Normal di awal, tunggu OPoI challenge selesai (~1-2 menit) |
+|| Hashrate rendah (< 1 Ghash/s) | Normal di awal, tunggu OPoI challenge selesai (~1-2 menit) |
+|| `transaction already in the mempool` | Escrow claim transaction stuck. **Solusi:** Restart node: `screen -S llm-inference -X quit && sleep 3 && screen -dmS llm-inference bash -c '/opt/ai-workspace/inference/start.sh > /opt/ai-workspace/logs/inference.log 2>&1'`. Miner akan auto-reconnect. |
+|| OPoI challenge terus repeat / mining pause terus | Sama di atas — restart node untuk clear OPoI state. Jika berulang, cek apakah node fully sync (`grep "Tx throughput" /opt/ai-workspace/logs/inference.log`) |
+|| `No workers specified` | **Plugin tidak ketemu.** Pastikan `libkeryxopencl.so` ada di directory yang sama dengan `gpu-worker` (`/opt/ai-workspace/training/`). Miner cari plugin di directory binary-nya, bukan di `inference/`. |
 
 ## Struktur Direktori Final
 
